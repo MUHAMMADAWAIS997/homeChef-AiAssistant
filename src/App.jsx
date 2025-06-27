@@ -1,28 +1,35 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import LogIn from './components/Login'
-import NavBar from './components/Navbar';
-import SignUp from './components/Signup';
-import Home from './components/Home';
-import React,{useState} from 'react';
+import Navbar from './components/layout/Navbar';
+import Footer from './components/layout/Footer';
+import Home from './pages/Home';
+import Recipes from './pages/Recipes';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import About from './pages/About';
+import ShoppingList from './pages/ShoppingList';
+import MealPlanner from './pages/MealPlanner';
+import Assistant from './pages/Assistant';
 
 function App() {
-  const [darkMode,setDarkMode]=useState(false);
-
-    const toggle = () => {
-       
-        setDarkMode(!darkMode);
-
-    }
-
   return (
     <Router>
-      <NavBar toggleMode={toggle} darkMode={darkMode}/>
+      <Navbar />
       <Routes>
-        <Route path="/" element={<LogIn Mode={darkMode}/>} />
-        <Route path="/register" element={<SignUp Mode={darkMode}/>} />
-        <Route path='/home' element={<Home Mode={darkMode}/>}/>
+        <Route exact path='/' element={<Home/>}></Route>
+        <Route exact path='/recipes' element={<Recipes/>}></Route>
+        <Route exact path='/login' element={<Login/>}></Route>
+        <Route exact path='/signup' element={<Signup/>}></Route>
+        <Route exact path='/about' element={<About/>}></Route>
+        <Route exact path='/shoplist' element={<ShoppingList/>}></Route>
+        <Route exact path='/mealplan' element={<MealPlanner/>}></Route>
+        <Route exact path='/assistant' element={<Assistant/>}></Route>
+
+
+
+
       </Routes>
+      <Footer/>
     </Router>
   );
 }
