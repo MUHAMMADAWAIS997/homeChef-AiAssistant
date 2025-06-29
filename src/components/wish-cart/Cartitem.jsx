@@ -3,15 +3,21 @@ import { Plus, Minus } from 'lucide-react';
 
 export default function CartItem( props ) {
   const {name,category,description,image}=props
-  const [quantity, setQuantity] = useState(0);
-
+  const [quantity, setQuantity] = useState(1);
+  const [list,setList]=useState([])
   const increaseQty = () => setQuantity(prev => prev + 1);
   const decreaseQty = () => {
     if (quantity > 1) setQuantity(prev => prev - 1);
   };
 
-  const handleAddToList = () => {
-    console.log(`Added ${quantity} "${title}" to the list`);
+  const handleAddToList = (lname,lcategory,lquantity) => {
+    const newItem = {
+      name:lname,
+      category:lcategory,
+      quantity:lquantity
+    };
+    setList(prevList => [...prevList, newItem]);
+    console.log([...list, newItem]);
   };
 
   return (
@@ -30,17 +36,17 @@ export default function CartItem( props ) {
       <h3 className="text-md flex w-full text-left text-gray-700 "> <p className='px-2'>{description.slice(0,50) }...</p></h3>
 
       {/* Quantity Controls */}
-      <div className="flex border w-40 rounded-2xl border-blue-500 items-center space-x-12">
+      <div className="flex border w-40 rounded-2xl border-blue-500 items-center space-x-10">
         <button
           onClick={decreaseQty}
-          className="bg-blue-500 text-white justify-self-center rounded-full p-2 hover:bg-blue-600 transition"
+          className="bg-blue-500 text-white justify-self-center rounded-l-full py-2 px-3 hover:bg-blue-600 transition"
         >
           <Minus size={11} />
         </button>
         <span className="text-md font-semibold">{quantity}</span>
         <button
           onClick={increaseQty}
-          className="bg-blue-500 text-white rounded-full p-2 hover:bg-blue-600 transition"
+          className="bg-blue-500 text-white rounded-r-full py-2 px-3 hover:bg-blue-600 transition"
         >
           <Plus size={11} />
         </button>
@@ -48,7 +54,7 @@ export default function CartItem( props ) {
 
       {/* Add to List Button */}
       <button
-        onClick={handleAddToList}
+        onClick={()=>handleAddToList(name,category,quantity)}
         className="mb-2 bg-blue-500 text-white w-40 px-4  rounded-2xl hover:bg-blue-600 transition"
       >
         Add to List

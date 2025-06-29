@@ -1,5 +1,5 @@
 const mongoose=require('mongoose')
-const Schema=mongoose.Schema()
+const {Schema}=mongoose
 const shopListSchema=new Schema({
     user:{
         type:mongoose.Schema.Types.ObjectId,
@@ -7,6 +7,7 @@ const shopListSchema=new Schema({
     },
     title:{
         type: String,
+        unique:true,
         required: true
     },
     quantity:{
@@ -14,4 +15,4 @@ const shopListSchema=new Schema({
         required: true
     }
 })
-module.exports=mongoose.model('shoplist',shopListSchema)
+module.exports=mongoose.model('Shoplist',shopListSchema)

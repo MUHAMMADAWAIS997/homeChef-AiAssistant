@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import RecipeCard from '../components/recipes/RecipeCard';
-import { Search, Filter, ChevronsUpDown, Clock, Flame } from 'lucide-react';
+import { Search, Filter,  Clock } from 'lucide-react';
 import heroImage from '../assets/bg4.jpeg'
 const Recipes = () => {
   const [recipes, setRecipes] = useState([]);
@@ -88,7 +88,7 @@ const Recipes = () => {
 
   return (
     <div>
-      <div className="bg-[url('https://images.pexels.com/photos/1660030/pexels-photo-1660030.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')] bg-cover bg-center h-[40vh] min-h-[300px] relative"        style={{ backgroundImage: `url(${heroImage})` }}
+      <div className=" bg-cover bg-center h-[40vh] min-h-[200px] relative"        style={{ backgroundImage: `url(${heroImage})` }}
       >
         <div className="absolute inset-0 bg-black/60"></div>
         
@@ -191,15 +191,7 @@ const Recipes = () => {
                 <span className="font-medium text-text-primary">{filteredRecipes.length}</span> recipes found
               </p>
               
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-text-secondary">Sort by:</span>
-                <select className="input text-sm py-1 pr-8">
-                  <option>Most Popular</option>
-                  <option>Newest</option>
-                  <option>Prep Time</option>
-                  <option>Rating</option>
-                </select>
-              </div>
+              
             </div>
             
             {filteredRecipes.length > 0 ? (
@@ -227,13 +219,7 @@ const Recipes = () => {
               </div>
             )}
             
-            {filteredRecipes.length > 0 && (
-              <div className="mt-8 flex justify-center">
-                <button className="btn btn-outline bg-blue-600 text-xl font-bold text-white rounded p-2 hover:bg-blue-700">
-                  Load More Recipes
-                </button>
-              </div>
-            )}
+            
           </div>
         </div>
       </div>
