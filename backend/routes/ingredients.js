@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const Meal = require('../models/Meals');
+const Ingredient = require('../models/Ingredient.js');
 const fetchuser = require('../middleware/fetchuser.js'); 
 
-// Route: get all meals using Get method
-router.get('/fetchmeals', fetchuser, async (req, res) => {
+// Route: fetch all ingridents using Get method
+router.get('/fetchingredients', fetchuser, async (req, res) => {
   try {
     const user = req.user; 
 
-    const data = await Meal.find(); 
+    const data = await Ingredient.find(); 
     if (!data || data.length === 0) {
       return res.status(404).json({ error: 'No data found' });
     }

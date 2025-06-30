@@ -10,9 +10,17 @@ const shopListSchema=new Schema({
         unique:true,
         required: true
     },
+    category:{
+        type:String,
+        required:true
+    },
     quantity:{
         type:Number,
         required: true
+    },
+    ingredient:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Ingredient'
     }
 })
 module.exports=mongoose.model('Shoplist',shopListSchema)

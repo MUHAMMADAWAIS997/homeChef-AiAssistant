@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link,useLocation } from 'react-router-dom';
 import {
-  Heart,ShoppingCart,User,Search,Menu,X,LogIn
+  Heart,ShoppingCart,User,Menu,X,LogIn
 } from 'lucide-react';
 import Account from '../profile/Account';
 import WishList from '../wish-cart/Wishlist';

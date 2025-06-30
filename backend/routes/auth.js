@@ -5,7 +5,7 @@ const {body,validationResult}=require('express-validator')
 const jwt=require('jsonwebtoken')
 const JWT_KEY='$AdMiN2709@JuTt%'
 const router=express.Router()
-const fetchuser=require('../middleware/fetchuser')
+const fetchuser=require('../middleware/fetchuser.js')
 //Route 1: Create User by POST method
 router.post('/createUser',[ body("name", "Enter Valid Name").isLength({ min: 3 }),
     body("email", "Enter Valid Email").isEmail(),
@@ -61,7 +61,7 @@ router.post(
       const token = jwt.sign(data, JWT_KEY);
       res.status(200).send({ token });
     } catch (err) {
-      res.status(500).json({ message: "Internal Server Error", err });
+      res.status(500).json({ error: "Internal Server Error", err });
     }
   }
 );
@@ -72,7 +72,7 @@ router.post("/getUser",fetchuser,async (req, res) => {
     const user = await User.findById(userId).select('-password')
     res.send(user)
   } catch (err) {
-    res.status(500).json({ message: "Internal Server Error", err });
+    res.status(500).json({ error: "Internal Server Error", err });
   }
 });
 

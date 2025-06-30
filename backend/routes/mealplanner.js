@@ -1,14 +1,14 @@
 const express = require("express");
 const Mealplan = require("../models/MealPlanner");
 const router = express.Router();
-const fetchuser = require("../middleware/fetchuser");
+const fetchuser = require("../middleware/fetchuser.js");
 
 // GET meal plan
 router.get("/getmeal", fetchuser, async (req, res) => {
   try {
     const mealPlan = await Mealplan.find({ user: req.user.id });
     if (!mealPlan || mealPlan.length === 0) {
-      return res.status(404).json({ message: "No meal plan found" });
+      return res.status(404).json({ success: "No meal plan found" });
     }
     return res.status(200).json(mealPlan);
   } catch (err) {
@@ -27,7 +27,7 @@ router.post("/addmeal", fetchuser, async (req, res) => {
       meal,
       user: req.user.id,
     });
-    return res.status(200).json({ message: "Plan added successfully", newPlan });
+    return res.status(200).json({ success: "Plan added successfully", newPlan });
   } catch (err) {
     res.status(500).json({ error: "Internal Server Error", err });
   }
@@ -66,7 +66,7 @@ router.delete("/deletemeal/:id", fetchuser, async (req, res) => {
       return res.status(401).json({ error: "Not Allowed" });
     }
     await Mealplan.findByIdAndDelete(req.params.id);
-    res.status(200).json({ message: "Meal plan deleted successfully" });
+    res.status(200).json({ success: "Meal plan deleted successfully" });
   } catch (err) {
     res.status(500).json({ error: "Internal Server Error", err });
   }

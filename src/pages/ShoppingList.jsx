@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import CartItem from '../components/wish-cart/Cartitem';
-import { Search, Filter } from 'lucide-react';
+import { Search, Filter,ShoppingCart } from 'lucide-react';
 import shopBg from '../assets/bg3.jpg'
 export default function ShoppingList() {
   const [ingredients, setIngredients] = useState([]);
@@ -10,26 +10,24 @@ export default function ShoppingList() {
 
   const categories = [
     'common', 'vegetable', 'bread', 'liquid', 'seafood', 'rice',
-    'preserve', 'sugar', 'juice', 'fat', 'cheese', 'grain', 'fruits', 'wine'
+    'preserve', 'sugar', 'juice', 'fat', 'cheese', 'grain', 'fruit', 'wine'
   ];
 
   useEffect(() => {
     const fetchIngredients = async () => {
       try {
         setLoading(true);
-        const res = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?i=list');
+        const res = await fetch('http://localhost:3000/api/ingredient/fetchingredients',{
+          method:"GET",
+          headers:{
+            'auth-token':"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjg2MGRkMzNjZGIzNGMzNjQ1YWQyZDgyIn0sImlhdCI6MTc1MTE3OTY2OX0.LCMuC22mcqBZCR7F4uwsvFeztF-FHj5gx0ddGuCWhfI"
+          }
+        });
         const data = await res.json();
 
-        const mappedData = data.meals.map(item => ({
-          name: item.strIngredient || 'Unknown',
-          category: item.strType?.toLowerCase() || 'commonly used Ingrediants',
-          description:
-            item.strDescription ||
-            'It is full of nutrients and very healthy for every age person. It contains a large amount of carbohydrates.',
-          image: `https://www.themealdb.com/images/ingredients/${item.strIngredient}-small.png`,
-        }));
+        
 
-        setIngredients(mappedData);
+        setIngredients(data);
         setLoading(false);
       } catch (error) {
         console.error('Failed to fetch ingredients:', error);
@@ -95,7 +93,10 @@ export default function ShoppingList() {
           </div>
         </div>
       </div>
-
+      <div className='p-2 grid grid-cols-2 border-b-gray-200 border'>
+        <span className='text-red-500 text-lg font-semibold hover:underline'>Total ingredients: {ingredients.length}</span>
+        <button className=' bg-blue-500 hover:bg-blue-700 text-lg p-2 text-white flex justify-self-end text-center font-semibold w-1/3 rounded'><ShoppingCart  className='mx-2 self-center '/> View Shopping List</button>
+      </div>
       {/* Layout: Sidebar + Ingredients */}
       <div className="flex">
         {/* Sidebar */}

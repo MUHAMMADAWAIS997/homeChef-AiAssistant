@@ -2,7 +2,7 @@ import React from 'react';
 import { X, Heart } from 'lucide-react';
 
 export default function WishList({ isOpen, onClose }) {
-  const isAuthenticated = true; // or use actual auth logic
+  const isAuthenticated = true; 
 
   if (!isOpen) return null;
 

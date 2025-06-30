@@ -32,7 +32,7 @@ export default function CartItem( props ) {
       </div>
 
       {/* Title */}
-      <h3 className="text-lg flex font-bold w-full px-2 text-left  text-yellow-300">{name}</h3>
+      <h3 className="text-lg flex font-bold w-full px-2 text-left  text-orange-500">{name}</h3>
       <h3 className="text-md flex w-full text-left text-gray-700 "> <p className='px-2'>{description.slice(0,50) }...</p></h3>
 
       {/* Quantity Controls */}
@@ -43,7 +43,7 @@ export default function CartItem( props ) {
         >
           <Minus size={11} />
         </button>
-        <span className="text-md font-semibold">{quantity}</span>
+        <span className="text-md font-semibold w-2">{quantity}</span>
         <button
           onClick={increaseQty}
           className="bg-blue-500 text-white rounded-r-full py-2 px-3 hover:bg-blue-600 transition"
@@ -55,7 +55,7 @@ export default function CartItem( props ) {
       {/* Add to List Button */}
       <button
         onClick={()=>handleAddToList(name,category,quantity)}
-        className="mb-2 bg-blue-500 text-white w-40 px-4  rounded-2xl hover:bg-blue-600 transition"
+        className="mb-2 bg-orange-600 text-white w-40 px-4 py-1 rounded-2xl hover:bg-orange-700 transition"
       >
         Add to List
       </button>
