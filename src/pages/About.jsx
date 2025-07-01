@@ -1,15 +1,12 @@
 import React from 'react';
 import { Mail, Phone, MapPin, Instagram, Facebook, Github } from 'lucide-react';
-import heroImage from '../assets/bg5.jpg'; // Replace with your food background image
-import person1 from '../assets/logo.jpg'; // Add image of testimonial person 1
+import heroImage from '../assets/bg5.jpg'; 
+import person1 from '../assets/logo.jpg'; 
 import person2 from '../assets/logo.jpg';
-import foodbg from '../assets/bg2.jpeg'; // Add image of testimonial person 2
- // Add image of testimonial person 2
-
+import foodbg from '../assets/bg2.jpeg';
 export default function About () {
   return (
     <div className="bg-white text-gray-800">
-      {/* Hero Section */}
       <section
         className="bg-cover bg-center py-20 text-center text-white"
         style={{ backgroundImage: `url(${heroImage})` }}
@@ -20,7 +17,6 @@ export default function About () {
         </p>
       </section>
 
-      {/* What is HomeChef */}
       <section className="max-w-6xl mx-auto px-6 py-12 grid md:grid-cols-2 gap-10 items-center">
         <div>
           <h2 className="text-3xl font-bold mb-4 text-blue-600">What is HomeChef?</h2>
@@ -31,7 +27,6 @@ export default function About () {
         <img src="https://t4.ftcdn.net/jpg/03/57/91/11/360_F_357911175_lUNZj0iZx0B6UEj3JyJwhKnJQv1jT1i4.jpg" alt="HomeChef concept" className="rounded-xl shadow-md" />
       </section>
 
-      {/* Services Section */}
       <section className="bg-gray-50 py-16 px-6">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold mb-8 text-blue-600 text-center">Our Services</h2>
@@ -56,7 +51,6 @@ export default function About () {
         </div>
       </section>
 
-      {/* Testimonials */}
       <section className="py-16 px-6 "style={{ backgroundImage: `url(${foodbg})` }}>
         <div className="max-w-5xl mx-auto">
           <h2 className="text-3xl font-bold mb-10 text-blue-600 text-center">What People Say</h2>
@@ -79,7 +73,6 @@ export default function About () {
         </div>
       </section>
 
-      {/* Contact Info */}
       <section className="bg-blue-50 py-12 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-6 text-blue-600">Contact Us</h2>
@@ -98,7 +91,6 @@ export default function About () {
             </div>
           </div>
 
-          {/* Social Links */}
           <div className="flex justify-center gap-6 mt-6 text-blue-600">
             <a href="#"><Instagram className="w-6 h-6" /></a>
             <a href="#"><Facebook className="w-6 h-6" /></a>

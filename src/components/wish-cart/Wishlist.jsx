@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useContext,useEffect } from 'react';
 import { X, Heart } from 'lucide-react';
-
+import AuthContext from '../../context/Auth context/AuthContext';
+import { wishContext } from '../../context/wishlist/wishListContext';
+import {getWishList,deleteWishList} from '../../hooks/wishlistapi'
 export default function WishList({ isOpen, onClose }) {
-  const isAuthenticated = true; 
-
+  const {isAuthenticated,token} = useContext(AuthContext); 
+  const {fav,addtoFav}=useContext(wishContext)
+  useEffect(() => {
+    const data=getWishList(token)
+    
+  },[token]);
   if (!isOpen) return null;
 
   return (

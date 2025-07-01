@@ -31,7 +31,6 @@ export default function MealPlanner() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
       <div className="bg-cover bg-center h-60 relative flex flex-col justify-center items-center"  style={{ backgroundImage: `url(${foodBg})` }}>
         <div className="absolute inset-0 bg-black/50"></div>
         <div className="relative z-10 text-center">
@@ -39,8 +38,6 @@ export default function MealPlanner() {
           <p className="text-white text-lg">Plan your weekly  meals and always know what’s for dinner.</p>
         </div>
       </div>
-
-      {/* Controls */}
       <div className="flex justify-between items-center px-4 py-6 bg-white shadow-sm">
         <div className="flex items-center gap-2">
           <button onClick={() => setStartOfWeek(prev => prev.subtract(7, 'day'))}>
@@ -65,7 +62,6 @@ export default function MealPlanner() {
         </div>
       </div>
 
-      {/* Table */}
       <div className="overflow-x-auto rounded shadow-md m-5">
         <table className="min-w-full table-auto border-collapse bg-white">
           <thead className="bg-blue-50">
@@ -108,7 +104,6 @@ export default function MealPlanner() {
         </table>
       </div>
 
-      {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-md shadow-lg w-full max-w-md relative">

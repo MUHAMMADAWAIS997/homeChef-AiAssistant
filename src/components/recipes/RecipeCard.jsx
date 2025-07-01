@@ -1,13 +1,11 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
 import { Clock, Heart } from 'lucide-react';
+import { useContext, } from 'react';
+import { wishContext } from '../../context/wishlist/wishListContext';
 
 const RecipeCard = ({ recipe }) => {
-  const { id, name, image, cookTimeMinutes, prepTimeMinutes, difficulty, rating } = recipe;
-  
+  const { _id, name, image, cookTimeMinutes, prepTimeMinutes, difficulty, rating } = recipe;
+  const {fav,addtoFav}=useContext(wishContext)
   const totalTime = cookTimeMinutes + prepTimeMinutes;
-  
-  // Generate rating stars
   const renderStars = (rating) => {
     const stars = [];
     const fullStars = Math.floor(rating);
@@ -38,10 +36,10 @@ const RecipeCard = ({ recipe }) => {
           className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
         />
         <button 
-          className="absolute top-3 right-3 p-2 bg-white/80  rounded-full hover:bg-white dark:hover:bg-red-700 hover:text-white transition-colors"
-          aria-label="Save recipe"
+          className="absolute top-3 right-3 p-2 bg-white/80  rounded-full text-white transition-colors"
+         onClick={addtoFav({name:name,meal:_id})}
         >
-          <Heart className="h-5 w-5 text-text-secondary hover:text-error" />
+          <Heart className={`h-5 w-5 text-text-secondary ${fav? ' bg-red-500':'bg-white'} `} />
         </button>
         
         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent py-4 px-3">
@@ -62,11 +60,10 @@ const RecipeCard = ({ recipe }) => {
       </div>
       
       <div className="p-4">
-        <Link to={`/recipe/${id}`}>
+        
           <h3 className="font-medium text-blue-500 text-lg mb-2 hover:text-primary transition-colors line-clamp-1">
             {name}
           </h3>
-        </Link>
         <p className="text-text-secondary text-gray-600 text-sm line-clamp-2">
           {recipe.description || 'Delicious recipe made with fresh ingredients. Perfect for any occasion.'}
         </p>

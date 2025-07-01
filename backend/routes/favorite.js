@@ -8,7 +8,7 @@ router.get("/fetchwishlist", fetchuser, async (req, res) => {
   try {
     const wishlist = await WishList.find({ user: req.user.id });
     if (wishlist.length===0) {
-      return res.status(404).json({ message: "WishList is empty" });
+      return res.status(200).json({ message: "WishList is empty" });
     }
     res.status(200).json(wishlist);
   } catch (err) {

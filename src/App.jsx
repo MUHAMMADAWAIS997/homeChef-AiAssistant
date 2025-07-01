@@ -10,27 +10,27 @@ import About from './pages/About';
 import ShoppingList from './pages/ShoppingList';
 import MealPlanner from './pages/MealPlanner';
 import Assistant from './pages/Assistant';
+import AuthState from './context/Auth context/AuthState';
+import WishState from './context/wishlist/wishState';
 
 function App() {
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route exact path='/' element={<Home/>}></Route>
-        <Route exact path='/recipes' element={<Recipes/>}></Route>
-        <Route exact path='/login' element={<Login/>}></Route>
-        <Route exact path='/signup' element={<Signup/>}></Route>
-        <Route exact path='/about' element={<About/>}></Route>
-        <Route exact path='/shoplist' element={<ShoppingList/>}></Route>
-        <Route exact path='/mealplan' element={<MealPlanner/>}></Route>
-        <Route exact path='/assistant' element={<Assistant/>}></Route>
-
-
-
-
-      </Routes>
-      <Footer/>
-    </Router>
+    <WishState>
+    <AuthState>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route exact path='/' element={<Home />}></Route>
+          <Route exact path='/recipes' element={<Recipes />}></Route>
+          <Route exact path='/login' element={<Login />}></Route>
+          <Route exact path='/signup' element={<Signup />}></Route>
+          <Route exact path='/about' element={<About />}></Route>
+          <Route exact path='/shoplist' element={<ShoppingList />}></Route>
+          <Route exact path='/mealplan' element={<MealPlanner />}></Route>
+          <Route exact path='/assistant' element={<Assistant />}></Route>
+        </Routes>
+        <Footer />
+      </Router></AuthState></WishState>
   );
 }
 

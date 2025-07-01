@@ -8,12 +8,12 @@ router.get('/fetchmeals', fetchuser, async (req, res) => {
   try {
     const user = req.user; 
 
-    const data = await Meal.find(); 
-    if (!data || data.length === 0) {
-      return res.status(404).json({ error: 'No data found' });
+    const meal = await Meal.find(); 
+    if (!meal || meal.length === 0) {
+      return res.status(404).json({ error: 'No meal found' });
     }
 
-    res.status(200).json(data);
+    res.status(200).json({recipes : meal});
   } catch (err) {
     res.status(500).json({ error: 'Internal Server Error', err });
   }

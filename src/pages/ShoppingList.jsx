@@ -6,7 +6,7 @@ export default function ShoppingList() {
   const [ingredients, setIngredients] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
-  const [loading, setLoading] = useState(true); // for initial loading
+  const [loading, setLoading] = useState(true); 
 
   const categories = [
     'common', 'vegetable', 'bread', 'liquid', 'seafood', 'rice',
@@ -38,7 +38,6 @@ export default function ShoppingList() {
     fetchIngredients();
   }, []);
 
-  // Filter ingredients
   const filteredIngredients = ingredients.filter(item => {
     const matchesSearch =
       item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -50,7 +49,6 @@ export default function ShoppingList() {
     return matchesSearch && matchesCategory;
   });
 
-  // Group by category
   const groupedByCategory = filteredIngredients.reduce((groups, item) => {
     const category = item.category;
     if (!groups[category]) {
@@ -70,7 +68,6 @@ export default function ShoppingList() {
 
   return (
     <>
-      {/* Hero/Search Section */}
       <div className=" bg-cover bg-center min-h-[150px] relative" style={{backgroundImage:`url(${shopBg})`}}>
         <div className="absolute inset-0 bg-black/60"></div>
 
@@ -97,9 +94,8 @@ export default function ShoppingList() {
         <span className='text-red-500 text-lg font-semibold hover:underline'>Total ingredients: {ingredients.length}</span>
         <button className=' bg-blue-500 hover:bg-blue-700 text-lg p-2 text-white flex justify-self-end text-center font-semibold w-1/3 rounded'><ShoppingCart  className='mx-2 self-center '/> View Shopping List</button>
       </div>
-      {/* Layout: Sidebar + Ingredients */}
+      
       <div className="flex">
-        {/* Sidebar */}
         <div className="w-30 sm:w-64 bg-gray-100 h-full sticky top-0 p-4 shadow-md">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-semibold flex items-center gap-1">
@@ -113,7 +109,6 @@ export default function ShoppingList() {
               Reset
             </button>
           </div>
-
           <div className="mb-6">
             <h4 className="text-sm font-medium mb-2">Categories:</h4>
             <form className="space-y-1 max-h-[60vh] overflow-y-auto pr-1">
@@ -144,8 +139,6 @@ export default function ShoppingList() {
             </form>
           </div>
         </div>
-
-        {/* Ingredient Grid */}
         <div className="flex-1 overflow-y-auto h-[calc(150vh-40vh)] p-6 space-y-8">
           {loading ? (
             <Loader />

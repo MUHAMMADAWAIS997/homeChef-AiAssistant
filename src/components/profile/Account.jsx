@@ -1,15 +1,28 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { X,UserCircle, User, Mail } from 'lucide-react';
-
+import AuthContext from '../../context/Auth context/AuthContext';
+import {getUser} from '../../hooks/authapi'
 export default function Account({ isOpen, onClose }) {
-  const isAuthenticated = true; // or use actual auth logic
+  const [user,setUser]=useState(null)
+  const {isAuthenticated,token} = useContext(AuthContext); 
+  useEffect(() => {
+    const fetchUser=async()=>{
+    const data=await getUser(token);
+    console.log(data)
+    setUser(data)
+    }
+    if(token){
+    fetchUser()
 
+    }
+    
+  }, [token]);
   if (!isOpen) return null;
 
   return (
     <div>
       <div
-        className={`absolute rounded-2xl right-0 mx-5 my-7 w-3xs max-w-md bg-gray-100 shadow-2xl px-6 py-10  z-50 transition-all duration-200`}
+        className={`absolute right-0 mx-5 my-7 w-3xs max-w-md bg-gray-50 shadow-2xl px-6 py-10  z-50 transition-all duration-200`}
       >
         <button
           onClick={onClose}
@@ -17,7 +30,7 @@ export default function Account({ isOpen, onClose }) {
         >
           <X />
         </button>
-        {isAuthenticated ? (
+        {isAuthenticated && user? (
           <div>
             <h1 className="text-blue-600 text-2xl text-center font-bold">Your Profile</h1>
             <h3 className="justify-self-center m-5 text-blue-600">
@@ -26,10 +39,10 @@ export default function Account({ isOpen, onClose }) {
             <h3 className=" flex gap-1 text-blue-800 font-semibold mb-1">
              <User/>Name:  
             </h3>
-            <p className='block text-center text-md font-normal'>Awais</p>
+            <p className='block text-center text-md font-normal'>{user.name}</p>
               <h3 className="flex gap-1 text-blue-800 font-semibold mb-1">
              <Mail/> Email: </h3>
-              <p className='relative text-center text-md font-normal'>awais@gmail.com</p> 
+              <p className='relative text-center text-md font-normal'>{user.email}</p> 
             
           </div>
           
