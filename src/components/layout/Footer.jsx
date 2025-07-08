@@ -1,9 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ChefHat,Facebook,Twitter,Mail,Instagram } from 'lucide-react';
+import { Home, Info, BookOpen, ShoppingCart,
+  Bot,Facebook,Twitter,Mail,Instagram, 
+  Heart,
+  User} from 'lucide-react';
 export default function Footer() {
   return (
-    <footer className={` bg-white text-gray-800 border border-t-gray-200 transition-colors duration-300`}>
+    <>
+   
+    <footer className={` bg-white text-gray-800 border hidden sm:block border-t-gray-200 transition-colors duration-300`}>
       <div className="w-full mx-auto px-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           <div className="col-span-1 md:col-span-1">
@@ -31,6 +36,8 @@ export default function Footer() {
               </a>
             </div>
           </div>
+
+
           <div className="col-span-1 mt-10 ml-40">
             <h3 className="text-lg font-semibold mb-4">Subscribe</h3>
             <form className="flex">
@@ -54,5 +61,25 @@ export default function Footer() {
         </div>
       </div>
     </footer>
+    <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t sm:hidden shadow-md">
+  <div className="flex justify-around items-center py-2 text-xs ">
+    <Link to="/" className="flex flex-col items-center text-gray-600 hover:text-blue-600">
+      <Home className="w-5 h-5 mb-1" /> Home
+    </Link>
+    <Link to="/about" className="flex flex-col items-center text-gray-600 hover:text-blue-600">
+      <Info className="w-5 h-5 mb-1" /> About
+    </Link>
+    <Link to="/wishlist" className="flex flex-col items-center text-gray-600 hover:text-blue-600">
+      <Heart className="w-5 h-5 mb-1" /> WishList
+    </Link>
+    <Link to="/shoplist" className="flex flex-col items-center text-gray-600 hover:text-blue-600">
+      <User className="w-5 h-5 mb-1" /> Account
+    </Link>
+    <Link to="/assistant" className="flex flex-col items-center text-gray-600 hover:text-blue-600">
+      <Bot className="w-5 h-5 mb-1" />AI Assistant
+    </Link>
+  </div>
+</div>
+     </>
   );
 }

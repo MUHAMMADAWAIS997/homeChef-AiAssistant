@@ -10,7 +10,7 @@ router.get("/fetchwishlist", fetchuser, async (req, res) => {
     if (wishlist.length===0) {
       return res.status(200).json({ message: "WishList is empty" });
     }
-    res.status(200).json(wishlist);
+    res.status(200).json({favorite: wishlist});
   } catch (err) {
     res.status(500).json({ error: "Internal Server Error", err });
   }
@@ -29,7 +29,7 @@ router.post("/addfavorite", fetchuser, async (req, res) => {
       name,
       meal
     });
-    res.status(200).json(added);
+    res.status(200).json({added});
   } catch (err) {
     res.status(500).json({ error: "Internal Server Error", err });
   }

@@ -68,10 +68,10 @@ export default function ShoppingList() {
 
   return (
     <>
-      <div className=" bg-cover bg-center min-h-[150px] relative" style={{backgroundImage:`url(${shopBg})`}}>
+      <div className=" bg-cover bg-center min-h-[150px] w-full relative" style={{backgroundImage:`url(${shopBg})`}}>
         <div className="absolute inset-0 bg-black/60"></div>
 
-        <div className="container relative h-full flex flex-col justify-center items-center">
+        <div className="container relative w-full h-full flex flex-col justify-center items-center">
           <h1 className="text-white text-4xl font-bold mb-2">Explore Ingredients</h1>
 
           <div className="w-full max-w-2xl bg-white/95 p-3 rounded-lg shadow-lg">

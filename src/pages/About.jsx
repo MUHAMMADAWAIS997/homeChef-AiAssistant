@@ -28,7 +28,7 @@ export default function About () {
       </section>
 
       <section className="bg-gray-50 py-16 px-6">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-6xl  mx-auto">
           <h2 className="text-3xl font-bold mb-8 text-blue-600 text-center">Our Services</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="bg-white p-6 shadow-md rounded-xl text-center">

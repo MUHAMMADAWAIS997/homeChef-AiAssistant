@@ -1,69 +1,65 @@
 // Navbar.jsx
-import React, { useEffect, useState } from 'react';
-import { Link,useLocation } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import {
-  Heart,ShoppingCart,User,Menu,X,LogIn
+  Home, Info, BookOpen, CalendarCheck, ShoppingCart,
+  Bot, LogIn, X, Menu, User, Heart
 } from 'lucide-react';
 import Account from '../profile/Account';
 import WishList from '../wish-cart/Wishlist';
+import AuthContext from '../../context/Auth context/AuthContext';
+import { wishContext } from '../../context/wishlist/wishListContext';
 
 const Navbar = () => {
-    const [isAuthenticated, setisAuthenticated] = useState(false);
-    const [showFav, setShowFav] = useState(false);
-    const [showCart, setShowCart] = useState(false);
-    const [showProfile,setShowProfile]=useState(false)
-    
+  const { isAuthenticated,logout } = useContext(AuthContext)
+  const {fav}=useContext(wishContext)
+  const [showFav, setShowFav] = useState(false);
+  const [showProfile, setShowProfile] = useState(false)
   const location = useLocation();
-
+  const checkLogout=()=>{
+    logout()
+  }
   const [menuOpen, setMenuOpen] = useState(false);
   const navItems = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
     { name: "Recipes", path: "/recipes" },
-    { name: "Meal Planner" , path:"/mealplan"},
-    { name: "Shopping List" , path:"/shoplist"},
-    { name: "AI Assitant" , path:"/assistant"}
+    { name: "Meal Planner", path: "/mealplan" },
+    { name: "Shopping List", path: "/shoplist" },
+    { name: "AI Assitant", path: "/assistant" }
 
   ];
 
   const isActive = (path) => location.pathname === path;
- 
+
 
   return (
-    <nav className="bg-white shadow-md w-full z-50">
-      {/* Top Navbar */}
-      <div className="max-w-screen-xl mx-auto flex items-center justify-between p-4 flex-wrap">
-        {/* Logo */}
+    <nav className="sticky top-0 bg-white shadow-md w-full z-50">
+      <div className="max-w-screen-xl mx-auto flex items-center justify-between py-2 flex-wrap">
         <div className="flex items-center space-x-2">
           <img
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVnmFDMlY-EFSEeDDXJGDw_9Z_AyVBJQrrKQ&s"
             alt="logo"
             className="h-10"
           />
-          <span className="text-xl font-bold text-blue-600">Home Chef</span>
+          <span className="text-xl font-bold  text-blue-600">Home Chef</span>
         </div>
-
-        {/* Hamburger for Mobile */}
         <button
           className="sm:hidden ml-auto text-gray-700"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
-
-        
-
-        {/* Icons */}
         <div className="hidden sm:flex items-center space-x-6 mt-4 sm:mt-0">
           <div className="relative">
             <span className="absolute -top-2 -right-3 bg-red-600 text-white text-xs px-1.5 rounded-full">
-              6
+              {fav.length}
             </span>
-            <button onClick={()=>setShowFav(true)} className="text-gray-700 flex items-center text-sm">
+            <button onClick={() => setShowFav(true)} className="text-gray-700 flex items-center text-sm">
               <Heart className="w-5 h-5 mr-1" /> WishList
             </button>
           </div>
-          <WishList isOpen={showFav} onClose={()=>{setShowFav(false)}}/>
+          <WishList isOpen={showFav} onClose={() => { setShowFav(false) }} />
           <div className="relative">
             <span className="absolute -top-2 -right-3 bg-red-600 text-white text-xs px-1.5 rounded-full">
               2
@@ -73,39 +69,31 @@ const Navbar = () => {
             </button>
           </div>
 
-          <button onClick={()=>setShowProfile(true)} className="text-gray-700 flex items-center text-sm">
+          <button onClick={() => setShowProfile(true)} className="text-gray-700 flex items-center text-sm">
             <User className="w-5 h-5 mr-1" /> My Account
           </button>
-          <Account isOpen={showProfile} onClose={()=>setShowProfile(false)} />
+          <Account isOpen={showProfile} onClose={() => setShowProfile(false)} />
         </div>
       </div>
-
-      {/* Divider */}
-      <div className="w-[80%] h-[1px] justify-self-center bg-gray-200"></div>
-
-      {/* Bottom Navbar */}
-      <div className="max-w-screen-xl mx-auto flex flex-wrap justify-between items-center px-4 py-2 text-sm">
-        {/* Nav Links */}
+      <div className="w-[90%] h-[1px] justify-self-center bg-gray-200"></div>
+      <div className="max-w-screen-xl mx-auto flex flex-wrap justify-between items-center py-2 text-sm">
         <div className="hidden sm:flex flex-wrap gap-4">
           {navItems.map((item) => (
-              <div key={item.path} className="relative flex flex-col items-center">
-                <Link
-                  to={item.path}
-                  className={`transition font-medium ${isActive(item.path) ? 'font-bold text-blue-600' : 'hover:text-blue-500'}`}
-                >
-                  {item.name}
-                </Link>
-                {/* Bottom border underline */}
-                {isActive(item.path) && (
-                  <div className="absolute top-[1.3rem] w-full h-[2px] bg-blue-600 rounded-md" />
-                )}
-              </div>
-            ))}
+            <div key={item.path} className="relative flex flex-col items-center">
+              <Link
+                to={item.path}
+                className={`transition font-medium font-mono ${isActive(item.path) ? 'font-extrabold text-blue-600' : 'hover:text-blue-500'}`}
+              >
+                {item.name}
+              </Link>
+              {isActive(item.path) && (
+                <div className="absolute top-[1.3rem] w-full h-[2px] bg-blue-600 rounded-md" />
+              )}
+            </div>
+          ))}
         </div>
-
-        {/* Location and Language */}
-        <div className="hidden sm:flex items-center gap-3 mt-2 sm:mt-0">
-            <div className="flex items-center space-x-1">
+        <div className="hidden sm:flex items-center gap-3  mt-2 sm:mt-0">
+          <div className="flex items-center mt-3 space-x-1">
             <img
               src="https://flagcdn.com/us.svg"
               alt="US"
@@ -114,56 +102,76 @@ const Navbar = () => {
             <span>English (USA)</span>
           </div>
           <Link to='/login'>
-          {isAuthenticated?<button  onClick={checkLogout} className="flex items-center gap-1 mt-2 bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">
-                <LogIn size={18} /> Logout
-              </button>: <button className="flex items-center gap-1 mt-2 bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">
-                <LogIn size={18} /> Login
-              </button>}</Link>
-          
+            {isAuthenticated ? <button onClick={checkLogout} className="flex font-semibold items-center gap-1 mt-2 bg-red-500 text-white px-6 py-2 rounded hover:bg-red-700">
+              <LogIn size={18} /> Logout
+            </button> : <button className="flex items-center gap-1 mt-2 font-semibold text-blue-600 border border-blue-600  hover:text-white px-6 py-2 rounded hover:bg-blue-600">
+              <LogIn size={18} /> Login
+            </button>}</Link>
+
         </div>
       </div>
+    <>
+  {menuOpen && (
+    <div
+      className="fixed inset-0 bg-black/20 z-40"
+      onClick={() => setMenuOpen(false)}
+    />
+  )}
+  <div
+    className={`fixed top-0 right-0 h-full w-1/2 sm:w-1/4 bg-white z-50 shadow-lg p-4 flex flex-col text-left transform transition-transform duration-500 ease-in-out ${
+      menuOpen ? "translate-x-0" : "translate-x-full"
+    }`}
+  >
+    <div className="flex justify-end mb-2">
+      <button
+        onClick={() => setMenuOpen(false)}
+        className="text-gray-600 hover:text-red-600"
+      >
+        <X className="w-6 h-6" />
+      </button>
+    </div>
+    <nav className="flex flex-col space-y-4 mt-2 text-gray-700 font-medium">
+      <Link onClick={() => setMenuOpen(false)} to="/" className="flex items-center gap-2 hover:text-blue-600">
+        <Home className="w-5 h-5" /> Home
+      </Link>
+      <Link onClick={() => setMenuOpen(false)} to="/about" className="flex items-center gap-2 hover:text-blue-600">
+        <Info className="w-5 h-5" /> About
+      </Link>
+      <Link onClick={() => setMenuOpen(false)} to="/recipes" className="flex items-center gap-2 hover:text-blue-600">
+        <BookOpen className="w-5 h-5" /> Recipes
+      </Link>
+      <Link onClick={() => setMenuOpen(false)} to="/mealplan" className="flex items-center gap-2 hover:text-blue-600">
+        <CalendarCheck className="w-5 h-5" /> Meal Planner
+      </Link>
+      <Link onClick={() => setMenuOpen(false)} to="/shoplist" className="flex items-center gap-2 hover:text-blue-600">
+        <ShoppingCart className="w-5 h-5" /> Shopping List
+      </Link>
+      <Link onClick={() => setMenuOpen(false)} to="/assistant" className="flex items-center gap-2 hover:text-blue-600">
+        <Bot className="w-5 h-5" /> AI Assistant
+      </Link>
+      <Link to="/login">
+        {isAuthenticated ? (
+          <button
+            onClick={checkLogout}
+            className="flex w-full items-center font-semibold gap-2 mt-2 bg-red-500 text-white px-3 py-2 rounded hover:bg-red-700"
+          >
+            <LogIn className="w-5 h-5" /> Logout
+          </button>
+        ) : (
+          <button
+            onClick={() => setMenuOpen(false)}
+            className="flex w-full items-center gap-2 mt-2 font-semibold bg-blue-600 text-white px-3 py-2 rounded hover:bg-blue-700"
+          >
+            <LogIn className="w-5 h-5" /> Login
+          </button>
+        )}
+      </Link>
+    </nav>
+  </div>
+</>
 
-      {/* Mobile Menu */}
-      {menuOpen && (
-        <div className="sm:hidden px-4 pb-4 space-y-4">
-          <div className="flex flex-col gap-2">
-           
-            <div className="flex flex-col gap-2">
-              <button className="text-gray-700 flex items-center text-sm">
-                <Heart className="w-5 h-5 mr-1" /> WishList
-              </button>
-              <button className="text-gray-700 flex items-center text-sm">
-                <User className="w-5 h-5 mr-1" /> My Account
-              </button>
-            </div>
-          </div>
 
-          <div className="container py-4 flex flex-col gap-4 text-left">
-            <Link   onClick={() => setMenuOpen(!menuOpen)}  to="/" className=" hover:text-blue-600">Home</Link>
-            <Link   onClick={() => setMenuOpen(!menuOpen)} to="/about" className="hover:text-blue-600">About</Link>
-            <Link   onClick={() => setMenuOpen(!menuOpen)} to="/recipes" className="hover:text-blue-600">Recipes</Link>
-            <Link   onClick={() => setMenuOpen(!menuOpen)} to="/mealplan" className="hover:text-blue-600">Meal Planner</Link>
-            <Link   onClick={() => setMenuOpen(!menuOpen)} to="/shoplist" className="hover:text-blue-600">Shopping List</Link>
-            <Link   onClick={() => setMenuOpen(!menuOpen)} to="/assistant" className="hover:text-blue-600">AI Assistant</Link>
 
-           
-            <div className="flex items-center space-x-1">
-            <img
-              src="https://flagcdn.com/us.svg"
-              alt="US"
-              className="w-5 h-3 object-cover"
-            />
-            <span>English (USA)</span>
-            <Link to='/login'>
-            {isAuthenticated?<button  onClick={checkLogout} className="flex ml-40 items-center gap-1 mt-2 bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">
-                <LogIn size={18} /> Logout
-              </button>: <button className="flex items-center gap-1 mt-2 ml-40 bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">
-                <LogIn size={18} /> Login
-              </button>}</Link>
-          </div>
-          </div>
-        </div>
-      )}
     </nav>
   );
 };

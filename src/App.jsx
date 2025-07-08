@@ -12,13 +12,18 @@ import MealPlanner from './pages/MealPlanner';
 import Assistant from './pages/Assistant';
 import AuthState from './context/Auth context/AuthState';
 import WishState from './context/wishlist/wishState';
+import { ToastContainer } from 'react-toastify';
+import WishList from './components/wish-cart/Wishlist';
+import { useState } from 'react';
 
 function App() {
+  const [showFav,setShowFav]=useState(true)
   return (
     <WishState>
     <AuthState>
       <Router>
         <Navbar />
+        <ToastContainer pauseOnHover={false} autoClose={1000}/>
         <Routes>
           <Route exact path='/' element={<Home />}></Route>
           <Route exact path='/recipes' element={<Recipes />}></Route>
@@ -28,6 +33,8 @@ function App() {
           <Route exact path='/shoplist' element={<ShoppingList />}></Route>
           <Route exact path='/mealplan' element={<MealPlanner />}></Route>
           <Route exact path='/assistant' element={<Assistant />}></Route>
+          <Route exact path='/wishlist' element={<WishList isOpen={showFav} onClose={()=>setShowFav(false)} />}></Route>
+
         </Routes>
         <Footer />
       </Router></AuthState></WishState>

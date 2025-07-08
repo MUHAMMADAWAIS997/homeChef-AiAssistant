@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import RecipeCard from '../components/recipes/RecipeCard';
-import { Search, Filter,  Clock } from 'lucide-react';
-import heroImage from '../assets/bg4.jpeg'
+import { Search,   Clock } from 'lucide-react';
+import heroImage from '../assets/bg4.jpeg';
+import { toast } from 'react-toastify';
 import AuthContext from '../context/Auth context/AuthContext';
+import { wishContext } from '../context/wishlist/wishListContext';
 const Recipes = () => {
   const BASE_API=import.meta.env.VITE_BASE_API
   const {isAuthenticated,token}=useContext(AuthContext)
-  const [recipes, setRecipes] = useState([]);
+  const {recipes, setItems} = useContext(wishContext)
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [filters, setFilters] = useState({
@@ -14,7 +16,7 @@ const Recipes = () => {
     difficulty: '',
     cookTime: '',
   });
-  
+  const {fav,setList,addList}=useContext(wishContext)
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
@@ -28,7 +30,7 @@ const Recipes = () => {
         if (!response.ok) {
         }
         const data = await response.json();
-        setRecipes(data.recipes || []);
+        setItems(data.recipes || []);
         setLoading(false);
       } catch (err) {
         console.error('Error fetching recipes:', err);
@@ -37,7 +39,58 @@ const Recipes = () => {
     };
 
     fetchRecipes();
-  }, []);
+  }, [token]);
+ useEffect(() => {
+     const getWishList = async () => {
+       try {
+         const response = await fetch(`${BASE_API}wishlist/fetchwishlist`, {
+           method: "GET",
+           headers: {
+             'Content-Type': 'application/json',
+             'auth-token': token
+           },
+         })
+         const data = await response.json()
+         if (response.ok) {
+           setList(data.favorite)
+         }
+         else {
+           toast.error(data.error)
+         }
+       } catch (err) {
+         console.log(err)
+       }
+     }
+     if (token) {
+       getWishList()
+     }
+   }, [token]);
+
+    const addtoFav = async (fname, fmeal) => {
+    const data = ({ name: fname, meal: fmeal })
+    try {
+      const response = await fetch(`${BASE_API}wishlist/addfavorite`, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': token
+        },
+        body: JSON.stringify(data)
+      })
+      const res = await response.json()
+      if (response.ok) {
+        console.log(res.added)
+        addList(res.added)
+        toast.success("Recipe added to Wishlist")
+
+      }
+      else {
+        toast.error(res.error)
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
   
   const handleFilterChange = (filterType, value) => {
     setFilters({
@@ -150,7 +203,8 @@ const Recipes = () => {
             {filteredRecipes.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredRecipes.map((recipe) => (
-                  <RecipeCard key={recipe._id} recipe={recipe} />
+                  <RecipeCard key={recipe._id}  isFav={fav.some(f => f.meal === recipe._id)}
+  addtoFav={addtoFav} recipe={recipe} />
                 ))}
               </div>
             ) : (

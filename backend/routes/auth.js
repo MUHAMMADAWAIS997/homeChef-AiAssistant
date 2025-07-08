@@ -59,7 +59,7 @@ router.post(
         },
       };
       const token = jwt.sign(data, JWT_KEY);
-      res.status(200).send({ token });
+      res.status(200).json({token});
     } catch (err) {
       res.status(500).json({ error: "Internal Server Error", err });
     }
@@ -68,8 +68,10 @@ router.post(
 //Router 3: Get user data using POST method (after user logged in) auth required
 router.post("/getUser",fetchuser,async (req, res) => {
   try {
-    const userId=req.user.id
-    const user = await User.findById(userId).select('-password')
+    const user = await User.findById(req.user.id).select('-password')
+    if(!user){
+      return res.status(404).json({error:"User Not Found"})
+    }
     res.status(200).json(user)
   } catch (err) {
     res.status(500).json({ error: "Internal Server Error", err });
