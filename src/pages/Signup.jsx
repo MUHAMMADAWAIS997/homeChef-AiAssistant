@@ -36,7 +36,7 @@ export default function Signup() {
       if (response.ok) {
         login(res.token)
         toast.success("Registered successfully")
-        navigate('/recipes')
+        navigate('/home')
       }
       else {
         if (Array.isArray(res.error)) {
@@ -131,7 +131,7 @@ export default function Signup() {
 
           </form>
           <p className="mt-4 text-sm text-center">
-            Already have an account? <Link to="/login" className="text-blue-500 hover:underline">Login</Link>
+            Already have an account? <Link to="/" className="text-blue-500 hover:underline">Login</Link>
           </p>
         </div>
       </div>

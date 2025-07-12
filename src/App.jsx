@@ -15,29 +15,34 @@ import WishState from './context/wishlist/wishState';
 import { ToastContainer } from 'react-toastify';
 import WishList from './components/wish-cart/Wishlist';
 import { useState } from 'react';
+import ShoplistState from './context/shoplist/shoplistState';
+import ShopCart from './components/wish-cart/ShopCart';
 
 function App() {
-  const [showFav,setShowFav]=useState(true)
+  const [showFav, setShowFav] = useState(true)
   return (
     <WishState>
-    <AuthState>
-      <Router>
-        <Navbar />
-        <ToastContainer pauseOnHover={false} autoClose={1000}/>
-        <Routes>
-          <Route exact path='/' element={<Home />}></Route>
-          <Route exact path='/recipes' element={<Recipes />}></Route>
-          <Route exact path='/login' element={<Login />}></Route>
-          <Route exact path='/signup' element={<Signup />}></Route>
-          <Route exact path='/about' element={<About />}></Route>
-          <Route exact path='/shoplist' element={<ShoppingList />}></Route>
-          <Route exact path='/mealplan' element={<MealPlanner />}></Route>
-          <Route exact path='/assistant' element={<Assistant />}></Route>
-          <Route exact path='/wishlist' element={<WishList isOpen={showFav} onClose={()=>setShowFav(false)} />}></Route>
-
-        </Routes>
-        <Footer />
-      </Router></AuthState></WishState>
+      <AuthState>
+        <ShoplistState>
+          <Router>
+            <ToastContainer pauseOnHover={false} autoClose={1000} />
+            <Routes>
+              <Route exact path='/' element={<Login />}></Route>
+              <Route exact path='/home' element={<Home />}></Route>
+              <Route exact path='/recipes' element={<Recipes />}></Route>
+              <Route exact path='/signup' element={<Signup />}></Route>
+              <Route exact path='/about' element={<About />}></Route>
+              <Route exact path='/shoplist' element={<ShoppingList />}></Route>
+              <Route exact path='/mealplan' element={<MealPlanner />}></Route>
+              <Route exact path='/assistant' element={<Assistant />}></Route>
+              <Route exact path='/wishlist' element={<WishList isOpen={showFav} onClose={() => setShowFav(false)} />}></Route>
+              <Route exact path='/shopcart' element={<ShopCart/>}></Route>
+            </Routes>
+           
+          </Router>
+          </ShoplistState>
+          </AuthState>
+          </WishState>
   );
 }
 

@@ -9,10 +9,12 @@ import Account from '../profile/Account';
 import WishList from '../wish-cart/Wishlist';
 import AuthContext from '../../context/Auth context/AuthContext';
 import { wishContext } from '../../context/wishlist/wishListContext';
+import { shoplistContext } from '../../context/shoplist/ShoplistContext';
 
 const Navbar = () => {
   const { isAuthenticated,logout } = useContext(AuthContext)
   const {fav}=useContext(wishContext)
+  const {shopList}=useContext(shoplistContext)
   const [showFav, setShowFav] = useState(false);
   const [showProfile, setShowProfile] = useState(false)
   const location = useLocation();
@@ -21,11 +23,11 @@ const Navbar = () => {
   }
   const [menuOpen, setMenuOpen] = useState(false);
   const navItems = [
-    { name: "Home", path: "/" },
+    { name: "Home", path: "/home" },
     { name: "About", path: "/about" },
     { name: "Recipes", path: "/recipes" },
     { name: "Meal Planner", path: "/mealplan" },
-    { name: "Shopping List", path: "/shoplist" },
+    { name: "Ingredients Shop", path: "/shoplist" },
     { name: "AI Assitant", path: "/assistant" }
 
   ];
@@ -62,11 +64,14 @@ const Navbar = () => {
           <WishList isOpen={showFav} onClose={() => { setShowFav(false) }} />
           <div className="relative">
             <span className="absolute -top-2 -right-3 bg-red-600 text-white text-xs px-1.5 rounded-full">
-              2
+              { shopList.length}
             </span>
+            <Link to='/shopcart'>
             <button className="text-gray-700 flex items-center text-sm">
-              <ShoppingCart className="w-5 h-5 mr-1" /> Shopping List
+              <ShoppingCart className="w-5 h-5 mr-1" /> Shopping Cart
             </button>
+            </Link>
+            
           </div>
 
           <button onClick={() => setShowProfile(true)} className="text-gray-700 flex items-center text-sm">
@@ -101,7 +106,7 @@ const Navbar = () => {
             />
             <span>English (USA)</span>
           </div>
-          <Link to='/login'>
+          <Link to='/'>
             {isAuthenticated ? <button onClick={checkLogout} className="flex font-semibold items-center gap-1 mt-2 bg-red-500 text-white px-6 py-2 rounded hover:bg-red-700">
               <LogIn size={18} /> Logout
             </button> : <button className="flex items-center gap-1 mt-2 font-semibold text-blue-600 border border-blue-600  hover:text-white px-6 py-2 rounded hover:bg-blue-600">
@@ -143,13 +148,13 @@ const Navbar = () => {
       <Link onClick={() => setMenuOpen(false)} to="/mealplan" className="flex items-center gap-2 hover:text-blue-600">
         <CalendarCheck className="w-5 h-5" /> Meal Planner
       </Link>
-      <Link onClick={() => setMenuOpen(false)} to="/shoplist" className="flex items-center gap-2 hover:text-blue-600">
-        <ShoppingCart className="w-5 h-5" /> Shopping List
+      <Link onClick={() => setMenuOpen(false)} to="/shopcart" className="flex items-center gap-2 hover:text-blue-600">
+        <ShoppingCart className="w-5 h-5" /> Shopping Cart
       </Link>
       <Link onClick={() => setMenuOpen(false)} to="/assistant" className="flex items-center gap-2 hover:text-blue-600">
         <Bot className="w-5 h-5" /> AI Assistant
       </Link>
-      <Link to="/login">
+      <Link to="/">
         {isAuthenticated ? (
           <button
             onClick={checkLogout}

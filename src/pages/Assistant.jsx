@@ -2,8 +2,18 @@ import React from 'react';
 import { BookOpen, Sparkles, Coffee, MessageSquare, Star } from 'lucide-react';
 import ChatInterface from '../components/assistant/ChatInterface';
 import bg from '../assets/bg4.jpeg'
+
+import Navbar from '../components/layout/Navbar';
+import Footer from '../components/layout/Footer';
+import { useNavigate } from 'react-router-dom';
 export default function Assistant () {
+  const navigate=useNavigate()
+  if(!isAuthenticated){
+  return navigate('/')
+}
   return (
+    <>
+        <Navbar/>
     <div>
       <div className="bg-white pb-12">
         <div className="container">
@@ -98,5 +108,7 @@ export default function Assistant () {
       </div>
       
     </div>
+        <Footer/>
+    </>
   );
 };

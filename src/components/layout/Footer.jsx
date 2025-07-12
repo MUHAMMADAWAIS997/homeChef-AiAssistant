@@ -3,8 +3,13 @@ import { Link } from 'react-router-dom';
 import { Home, Info, BookOpen, ShoppingCart,
   Bot,Facebook,Twitter,Mail,Instagram, 
   Heart,
-  User} from 'lucide-react';
+  } from 'lucide-react';
+import { toast } from 'react-toastify';
 export default function Footer() {
+  const handleSubmit=(e)=>{
+    e.preventDefault();
+    toast.info("Thank you for comment")
+  }
   return (
     <>
    
@@ -39,18 +44,18 @@ export default function Footer() {
 
 
           <div className="col-span-1 mt-10 ml-40">
-            <h3 className="text-lg font-semibold mb-4">Subscribe</h3>
-            <form className="flex">
+            <h3 className="text-lg font-semibold mb-4">Leave a comment</h3>
+            <form className="flex " onSubmit={handleSubmit}>
               <input
-                type="email"
-                placeholder="Your email"
+                type="text"
+                placeholder="Your comment"
                 className="px-4 py-2 rounded-l-md w-full focus:outline-none focus:ring-2 focus:ring-blue-600 border border-gray-300 "
               />
               <button
                 type="submit"
                 className="px-4 py-2 bg-blue-600 text-white rounded-r-md hover:bg-blue-700 transition-colors"
               >
-                Subscribe
+                Send
               </button>
             </form>
           </div>
@@ -73,7 +78,7 @@ export default function Footer() {
       <Heart className="w-5 h-5 mb-1" /> WishList
     </Link>
     <Link to="/shoplist" className="flex flex-col items-center text-gray-600 hover:text-blue-600">
-      <User className="w-5 h-5 mb-1" /> Account
+      <ShoppingCart className="w-5 h-5 mb-1" /> Shop
     </Link>
     <Link to="/assistant" className="flex flex-col items-center text-gray-600 hover:text-blue-600">
       <Bot className="w-5 h-5 mb-1" />AI Assistant

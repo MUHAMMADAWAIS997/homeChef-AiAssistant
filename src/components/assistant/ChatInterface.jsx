@@ -1,8 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Loader, Share, } from 'lucide-react';
 import logo from '../../assets/logo.jpg'
+import AuthContext from '../../context/Auth context/AuthContext';
+import { toast } from 'react-toastify';
 export default function ChatInterface() {
+  const {isAuthenticated}=useContext(AuthContext)
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -13,7 +16,6 @@ export default function ChatInterface() {
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
@@ -40,7 +42,10 @@ export default function ChatInterface() {
     setMessages((prev) => [...prev, userMessage]);
     setInput('');
     setIsLoading(true);
-
+    if (!isAuthenticated){
+      setIsLoading(false);
+      return toast.info("Login to continue Chat")
+    }
     try {
       const res = await fetch('http://localhost:3000/api/assistant/chat', {
         method: 'POST',

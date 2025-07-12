@@ -5,6 +5,9 @@ const shopListSchema=new Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
     },
+    image:{
+        type:String,
+    },
     title:{
         type: String,
         unique:true,

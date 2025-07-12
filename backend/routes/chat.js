@@ -17,7 +17,7 @@ router.post("/chat", async (req, res) => {
 
   try {
     const response = await openai.chat.completions.create({
-      model: "tngtech/deepseek-r1t-chimera:free", // can also be used gpt 4 but it is paid
+      model: "tngtech/deepseek-r1t-chimera:free", 
       messages: [{ role: "user", content: message }],
     });
 

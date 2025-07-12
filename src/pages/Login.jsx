@@ -31,7 +31,7 @@ export default function Login() {
       if (response.ok) {
         login(res.token)
         toast.success("Logged in successfully")
-        navigate('/recipes')
+        navigate('/home')
       }
       else {
         if (Array.isArray(res.error)) {

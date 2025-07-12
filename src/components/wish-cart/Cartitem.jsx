@@ -1,23 +1,34 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Plus, Minus } from 'lucide-react';
-
+import { shoplistContext } from '../../context/shoplist/ShoplistContext';
+import { addShoplist } from '../../api/shoplistApi';
+import { toast } from 'react-toastify';
 export default function CartItem( props ) {
-  const {name,category,description,image}=props
+  const {_id,name,category,description,image}=props
   const [quantity, setQuantity] = useState(1);
-  const [list,setList]=useState([])
+  const {addShopitem}=useContext(shoplistContext)
   const increaseQty = () => setQuantity(prev => prev + 1);
   const decreaseQty = () => {
     if (quantity > 1) setQuantity(prev => prev - 1);
   };
 
-  const handleAddToList = (lname,lcategory,lquantity) => {
+  const handleAddToList = async (limage,lname,id,lcategory,lquantity) => {
     const newItem = {
-      name:lname,
+      image:limage,
+      title:lname,
+      ingredient:id,
       category:lcategory,
       quantity:lquantity
     };
-    setList(prevList => [...prevList, newItem]);
-    console.log([...list, newItem]);
+    const res=await addShoplist(newItem)
+    if(res.success){
+     addShopitem(res.data)
+     toast.success("Item added to cart")
+
+    }
+    else{
+      toast.warn(res.error)
+    }
   };
 
   return (
@@ -48,10 +59,10 @@ export default function CartItem( props ) {
         </button>
       </div>
       <button
-        onClick={()=>handleAddToList(name,category,quantity)}
+        onClick={()=>handleAddToList(image,name,_id,category,quantity)}
         className="mb-2 bg-orange-600 text-white w-40 px-4 py-1 rounded-2xl hover:bg-orange-700 transition"
       >
-        Add to List
+        Add to cart
       </button>
     </div>
   );

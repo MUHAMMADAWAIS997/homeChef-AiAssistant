@@ -1,12 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import CartItem from '../components/wish-cart/Cartitem';
-import { Search, Filter,ShoppingCart } from 'lucide-react';
+import { Search, Filter, ShoppingCart } from 'lucide-react';
+import {Link} from 'react-router-dom'
 import shopBg from '../assets/bg3.jpg'
+import AuthContext from '../context/Auth context/AuthContext';
+import { shoplistContext } from '../context/shoplist/ShoplistContext';
+import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/layout/Navbar';
+import Footer from '../components/layout/Footer';
 export default function ShoppingList() {
   const [ingredients, setIngredients] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
+  const { isAuthenticated, token } = useContext(AuthContext)
+  const navigate =useNavigate()
 
   const categories = [
     'common', 'vegetable', 'bread', 'liquid', 'seafood', 'rice',
@@ -14,30 +22,29 @@ export default function ShoppingList() {
   ];
 
   useEffect(() => {
-    const fetchIngredients = async () => {
-      try {
-        setLoading(true);
-        const res = await fetch('http://localhost:3000/api/ingredient/fetchingredients',{
-          method:"GET",
-          headers:{
-            'auth-token':"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjg2MGRkMzNjZGIzNGMzNjQ1YWQyZDgyIn0sImlhdCI6MTc1MTE3OTY2OX0.LCMuC22mcqBZCR7F4uwsvFeztF-FHj5gx0ddGuCWhfI"
-          }
-        });
-        const data = await res.json();
-
-        
-
-        setIngredients(data);
-        setLoading(false);
-      } catch (error) {
-        console.error('Failed to fetch ingredients:', error);
-        setLoading(false);
-      }
-    };
-
-    fetchIngredients();
-  }, []);
-
+    if (isAuthenticated) {
+      fetchIngredients();
+    } 
+    
+  }, [isAuthenticated]);
+  const fetchIngredients = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch('http://localhost:3000/api/ingredient/fetchingredients', {
+        method: "GET",
+        headers: {
+          'auth-token': token
+        }
+      });
+      const data = await res.json();
+      setIngredients(data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Failed to fetch ingredients:', error);
+      setLoading(false);
+    }
+  };
+ 
   const filteredIngredients = ingredients.filter(item => {
     const matchesSearch =
       item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -58,17 +65,29 @@ export default function ShoppingList() {
     return groups;
   }, {});
 
-  const Loader = () => (
-   <div className="container py-12">
-        <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
-        </div>
-      </div>
-  );
+  const Loader = () => {
 
   return (
+    <div className="container py-12">
+      <div className="flex justify-center items-center h-64 flex-col gap-4">
+        {isAuthenticated ? (
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+        ) : (
+          <>
+            <div className="text-gray-600 text-lg font-semibold">Login to view ingredients</div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+};
+if(!isAuthenticated){
+  return navigate('/')
+}
+  return (
     <>
-      <div className=" bg-cover bg-center min-h-[150px] w-full relative" style={{backgroundImage:`url(${shopBg})`}}>
+    <Navbar/>
+      <div className=" bg-cover bg-center min-h-[150px] w-full relative" style={{ backgroundImage: `url(${shopBg})` }}>
         <div className="absolute inset-0 bg-black/60"></div>
 
         <div className="container relative w-full h-full flex flex-col justify-center items-center">
@@ -90,11 +109,12 @@ export default function ShoppingList() {
           </div>
         </div>
       </div>
-      <div className='p-2 grid grid-cols-2 border-b-gray-200 border'>
+      <div className='p-2 grid grid-cols-[50%_50%] justify-between border-b-gray-200 border'>
         <span className='text-red-500 text-lg font-semibold hover:underline'>Total ingredients: {ingredients.length}</span>
-        <button className=' bg-blue-500 hover:bg-blue-700 text-lg p-2 text-white flex justify-self-end text-center font-semibold w-1/3 rounded'><ShoppingCart  className='mx-2 self-center '/> View Shopping List</button>
-      </div>
-      
+        <Link to='/shopcart'>
+        <button className=' bg-blue-500 hover:bg-blue-700 text-xs sm:text-lg p-2 text-white flex justify-self-end text-center font-semibold w-[10rem] sm:w-[14rem] rounded'><ShoppingCart className='mx-2 self-center ' /> View Shopping List</button>
+      </Link></div>
+
       <div className="flex">
         <div className="w-30 sm:w-64 bg-gray-100 h-full sticky top-0 p-4 shadow-md">
           <div className="flex items-center justify-between mb-4">
@@ -140,7 +160,7 @@ export default function ShoppingList() {
           </div>
         </div>
         <div className="flex-1 overflow-y-auto h-[calc(150vh-40vh)] p-6 space-y-8">
-          {loading ? (
+          { loading ? (
             <Loader />
           ) : (
             <>
@@ -151,6 +171,7 @@ export default function ShoppingList() {
                     {items.map((item, idx) => (
                       <CartItem
                         key={`${category}-${idx}`}
+                        _id={item._id}
                         name={item.name}
                         description={item.description}
                         category={item.category}
@@ -163,13 +184,14 @@ export default function ShoppingList() {
 
               {filteredIngredients.length === 0 && (
                 <p className="text-center text-gray-500 mt-10">
-                  No ingredients or categories found 
+                  No ingredients or categories found
                 </p>
               )}
             </>
           )}
         </div>
       </div>
+      <Footer/>
     </>
   );
 }

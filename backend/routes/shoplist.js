@@ -18,7 +18,7 @@ router.get("/fetchshoplist", fetchuser, async (req, res) => {
 
 // add in shop list using Post method:
 router.post("/additem", fetchuser, async (req, res) => {
-  const { title, category, quantity, ingredient } = req.body;
+  const {image, title, category, quantity, ingredient } = req.body;
   try {
     const existing = await Shoplist.findOne({ title, user: req.user.id });
     if (existing) {
@@ -26,6 +26,7 @@ router.post("/additem", fetchuser, async (req, res) => {
     }
     const added = await Shoplist.create({
       user: req.user.id,
+      image,
       title,
       category,
       quantity,

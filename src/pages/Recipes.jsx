@@ -5,8 +5,12 @@ import heroImage from '../assets/bg4.jpeg';
 import { toast } from 'react-toastify';
 import AuthContext from '../context/Auth context/AuthContext';
 import { wishContext } from '../context/wishlist/wishListContext';
+import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/layout/Navbar';
+import Footer from '../components/layout/Footer';
 const Recipes = () => {
   const BASE_API=import.meta.env.VITE_BASE_API
+  const navigate =useNavigate()
   const {isAuthenticated,token}=useContext(AuthContext)
   const {recipes, setItems} = useContext(wishContext)
   const [loading, setLoading] = useState(true);
@@ -129,11 +133,15 @@ const Recipes = () => {
       </div>
     );
   }
-
+  if(!isAuthenticated){
+    return navigate('/')
+  }
  
 
-  return isAuthenticated ? 
-     (<div>
+  return (
+
+  <>
+  <Navbar/>
       <div className=" bg-cover bg-center h-[40vh] min-h-[200px] relative"        style={{ backgroundImage: `url(${heroImage})` }}
       >
         <div className="absolute inset-0 bg-black/60"></div>
@@ -228,8 +236,8 @@ const Recipes = () => {
           </div>
         </div>
       </div>
-      
-    </div>):(<p className='text-center text-lg font-semibold text-red-500 my-50'>To view all recipes, you need to Login first</p>)
+      <Footer/>
+    </>)
  
 };
 

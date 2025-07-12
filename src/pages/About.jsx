@@ -1,18 +1,22 @@
 import React from 'react';
-import { Mail, Phone, MapPin, Instagram, Facebook, Github } from 'lucide-react';
+import { Mail, Phone, MapPin,  } from 'lucide-react';
 import heroImage from '../assets/bg5.jpg'; 
 import person1 from '../assets/logo.jpg'; 
 import person2 from '../assets/logo.jpg';
 import foodbg from '../assets/bg2.jpeg';
+import Footer from '../components/layout/Footer';
+import Navbar from '../components/layout/Navbar';
 export default function About () {
   return (
+    <>
+    <Navbar/>
     <div className="bg-white text-gray-800">
       <section
-        className="bg-cover bg-center py-20 text-center text-white"
+        className="bg-cover bg-center py-10 text-center text-white"
         style={{ backgroundImage: `url(${heroImage})` }}
       >
-        <h1 className="text-5xl font-extrabold mb-4 drop-shadow">About HomeChef</h1>
-        <p className="text-xl font-medium max-w-2xl mx-auto drop-shadow">
+        <h1 className="text-5xl text-blue-500 font-bold mb-4 drop-shadow">About HomeChef</h1>
+        <p className="text-xl font-medium italic max-w-2xl mx-auto drop-shadow">
           Your smart companion for planning meals, finding recipes, AI cooking help, and managing your grocery list efficiently.
         </p>
       </section>
@@ -24,7 +28,7 @@ export default function About () {
             HomeChef is your intelligent kitchen partner. From curating meal plans tailored to your needs to providing step-by-step AI assistance while you cook, HomeChef revolutionizes how you manage time and eat smart. Discover recipes, optimize groceries, and let technology enhance your daily cooking.
           </p>
         </div>
-        <img src="https://t4.ftcdn.net/jpg/03/57/91/11/360_F_357911175_lUNZj0iZx0B6UEj3JyJwhKnJQv1jT1i4.jpg" alt="HomeChef concept" className="rounded-xl shadow-md" />
+        <img src="https://t4.ftcdn.net/jpg/03/57/91/11/360_F_357911175_lUNZj0iZx0B6UEj3JyJwhKnJQv1jT1i4.jpg" alt="HomeChef concept" className="rounded-xl shadow-md " />
       </section>
 
       <section className="bg-gray-50 py-16 px-6">
@@ -73,32 +77,28 @@ export default function About () {
         </div>
       </section>
 
-      <section className="bg-blue-50 py-12 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-6 text-blue-600">Contact Us</h2>
-          <div className="space-y-2 text-gray-700">
-            <div className="flex justify-center items-center gap-2">
+      <section className="bg-blue-50 items-center py-12 px-6">
+        <div className="max-w-4xl mx-auto text-center w-1/2">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-blue-600">Contact Us</h2>
+          <div className="space-y-2 justify-self-center md:w-1/2 text-gray-700">
+            <div className="flex  items-center gap-2">
               <Mail className="w-5 h-5" />
-              <a href="mailto:support@homechef.ai" className="text-blue-600 underline">support@homechef.ai</a>
+              <a href="mailto:awaisjuttgjuttg0@gmail.com" className="text-blue-600 underline">awaisjuttgjuttg0@gmail.com</a>
             </div>
-            <div className="flex justify-center items-center gap-2">
+            <div className="flex  items-center gap-2">
               <Phone className="w-5 h-5" />
               <span>+92 300 1234567</span>
             </div>
-            <div className="flex justify-center items-center gap-2">
+            <div className="flex  items-center gap-2">
               <MapPin className="w-5 h-5" />
-              <span>123 Culinary Street, FoodTech City, Pakistan</span>
+              <span>Bypass road Farooq-Abad, Sheikhupura, Pakistan</span>
             </div>
-          </div>
-
-          <div className="flex justify-center gap-6 mt-6 text-blue-600">
-            <a href="#"><Instagram className="w-6 h-6" /></a>
-            <a href="#"><Facebook className="w-6 h-6" /></a>
-            <a href="#"><Github className="w-6 h-6" /></a>
           </div>
         </div>
       </section>
     </div>
+    <Footer/>
+    </>
   );
 };
 
