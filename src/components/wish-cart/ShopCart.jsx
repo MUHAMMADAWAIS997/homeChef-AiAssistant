@@ -97,9 +97,11 @@ const sortedShopList = [...shopList].sort((a, b) =>
 
   doc.save("shoplist.pdf");
 };
-  if (!isAuthenticated){
-    return navigate('/')
-  }
+ useEffect(() => {
+     if (!isAuthenticated) {
+       navigate('/');
+     }
+   }, [isAuthenticated, navigate]);
   return (
     <>
       <Navbar/>

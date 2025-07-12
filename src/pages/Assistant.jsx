@@ -1,16 +1,20 @@
-import React from 'react';
+import React ,{useContext, useEffect}from 'react';
 import { BookOpen, Sparkles, Coffee, MessageSquare, Star } from 'lucide-react';
 import ChatInterface from '../components/assistant/ChatInterface';
 import bg from '../assets/bg4.jpeg'
-
+import AuthContext from '../context/Auth context/AuthContext';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import { useNavigate } from 'react-router-dom';
 export default function Assistant () {
+  const {isAuthenticated}=useContext(AuthContext)
   const navigate=useNavigate()
-  if(!isAuthenticated){
-  return navigate('/')
-}
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/');
+    }
+  }, [isAuthenticated, navigate]);
+  
   return (
     <>
         <Navbar/>

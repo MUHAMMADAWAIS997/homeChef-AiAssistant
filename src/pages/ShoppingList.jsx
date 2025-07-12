@@ -4,7 +4,6 @@ import { Search, Filter, ShoppingCart } from 'lucide-react';
 import {Link} from 'react-router-dom'
 import shopBg from '../assets/bg3.jpg'
 import AuthContext from '../context/Auth context/AuthContext';
-import { shoplistContext } from '../context/shoplist/ShoplistContext';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
@@ -15,6 +14,11 @@ export default function ShoppingList() {
   const [loading, setLoading] = useState(true);
   const { isAuthenticated, token } = useContext(AuthContext)
   const navigate =useNavigate()
+ useEffect(() => {
+  if (!isAuthenticated) {
+    navigate('/');
+  }
+}, [isAuthenticated, navigate]);
 
   const categories = [
     'common', 'vegetable', 'bread', 'liquid', 'seafood', 'rice',
@@ -81,9 +85,7 @@ export default function ShoppingList() {
     </div>
   );
 };
-if(!isAuthenticated){
-  return navigate('/')
-}
+
   return (
     <>
     <Navbar/>

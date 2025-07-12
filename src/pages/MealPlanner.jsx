@@ -170,9 +170,11 @@ export default function MealPlanner() {
     prev.setDate(currentDate.getDate() - 7);
     setCurrentDate(prev);
   };
-  if(!isAuthenticated){
-    return navigate('/')
-  }
+  useEffect(() => {
+      if (!isAuthenticated) {
+        navigate('/');
+      }
+    }, [isAuthenticated, navigate]);
   return (
     <>
     <Navbar/>

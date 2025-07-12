@@ -133,9 +133,11 @@ const Recipes = () => {
       </div>
     );
   }
-  if(!isAuthenticated){
-    return navigate('/')
-  }
+  useEffect(() => {
+      if (!isAuthenticated) {
+        navigate('/');
+      }
+    }, [isAuthenticated, navigate]);
  
 
   return (
